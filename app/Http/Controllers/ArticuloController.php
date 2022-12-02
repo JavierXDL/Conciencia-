@@ -1,28 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
-
 use App\Models\Articulo;
-
-
-
-
 //agregamos
-
-
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
 
 class ArticuloController extends Controller
 {
-
-  
-
     function __construct()
     {
         $this->middleware('permission:ver-articulo|crear-articulo|editar-articulol|borrar-articulo')->only('index');
@@ -32,11 +21,7 @@ class ArticuloController extends Controller
         $this->middleware('permission:borrar-articulo', ['only'=>['destroy']]);
 
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
      public function index()
     {
         $articulos =  Articulo::paginate(5);
@@ -44,22 +29,11 @@ class ArticuloController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('articulos.crear');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -71,7 +45,7 @@ class ArticuloController extends Controller
             'id_usuario',
             'id_revisor',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ''
+            
         ]);
 
         $input = $request->all();
@@ -91,12 +65,6 @@ class ArticuloController extends Controller
         // return redirect()->route('articulos.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Articulo $articulo)
     {
         return view('articulos.show',compact('articulo'));
@@ -113,13 +81,6 @@ class ArticuloController extends Controller
         return view('articulos.editar',compact('articulo'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Articulo $articulo)
     {
         $request->validate([
@@ -146,12 +107,6 @@ class ArticuloController extends Controller
         // return redirect()->route('articulos.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Articulo $articulo)
     {
         $articulo->delete();
