@@ -12,12 +12,13 @@ use App\Http\Controllers\PublicacionController;
 use App\Http\Controllers\RevisionController;
 use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\VistaController;
+use App\Http\Controllers\FilesController;
 use GuzzleHttp\Middleware;
 
 
-Route::get('/', [App\Http\Controllers\VistaController::class, 'index'])->name('welcome');
- Route::get('/show/{articulo}', [App\Http\Controllers\VistaController::class, 'show'])->name('show');
- Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [VistaController::class, 'index'])->name('welcome');
+ Route::get('/show/{articulo}', [VistaController::class, 'show'])->name('show');
+ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 Auth::routes();
@@ -31,3 +32,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('supervisor', SupervisorController::class);
 });
 
+// Route::get('/', [FilesController::class,'loadView']);
+// Route::post('/khe', [ArticuloController::class,'storeFile']);
+// Route::get('/descargar/{name}', [FilesController::class,'downloadFile'])->name('dowload');
